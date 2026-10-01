@@ -29,7 +29,7 @@ if ! grep -q "color-scheme='prefer-dark'" system_files/etc/dconf/db/local.d/00-l
   fail=1
 fi
 
-if grep -RniE 'rpm-ostree rebase|ostree-unverified-registry|systemctl reboot|podman push' build_files scripts Justfile; then
+if grep -RniE 'rpm-ostree rebase|ostree-unverified-registry|systemctl reboot|podman push' build_files scripts Justfile --exclude=validate.sh; then
   echo "ERROR: build source contains an unsafe/remote mutation command" >&2
   fail=1
 fi
