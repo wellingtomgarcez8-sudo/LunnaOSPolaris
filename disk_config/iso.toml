@@ -1,0 +1,4 @@
+[customizations.iso]
+volume_id = "LUNNAOS_POLARIS"
+application_id = "LunnaOS Polaris"
+publisher = "LunnaOS Project"
