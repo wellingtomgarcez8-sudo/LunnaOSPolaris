@@ -39,6 +39,8 @@ qt6-declarative
 qt6-wayland
 python
 python-pyqt6
+foot
+gtk3
 python-pywayland
 python-psutil
 ttf-dejavu
