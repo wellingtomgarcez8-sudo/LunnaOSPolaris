@@ -1,0 +1,86 @@
+name: LunnaOS Polaris — manual build
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Image tag
+        required: true
+        default: dev
+        type: string
+      publish:
+        description: Publish the container image to GHCR
+        required: true
+        default: false
+        type: boolean
+      build_iso:
+        description: Build the installable bootc-generic ISO
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate source
+        run: ./build_files/validate.sh
+
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
+
+      - name: Build LunnaOS image
+        env:
+          IMAGE: localhost/lunnaos-polaris:${{ inputs.tag }}
+        run: |
+          sudo podman build --pull=newer --tag "$IMAGE" .
+
+      - name: Login to GHCR
+        if: ${{ inputs.publish }}
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish LunnaOS image
+        if: ${{ inputs.publish }}
+        env:
+          IMAGE: localhost/lunnaos-polaris:${{ inputs.tag }}
+          DEST: ghcr.io/${{ github.repository_owner }}/lunnaos-polaris:${{ inputs.tag }}
+        run: sudo podman push "$IMAGE" "$DEST"
+
+      - name: Build ISO
+        if: ${{ inputs.build_iso }}
+        env:
+          IMAGE: localhost/lunnaos-polaris:${{ inputs.tag }}
+          BIB_IMAGE: quay.io/centos-bootc/bootc-image-builder:latest
+        run: |
+          sudo mkdir -p output/iso
+          sudo podman run --rm --privileged --pull=newer \
+            --security-opt label=type:unconfined_t \
+            -v "$PWD/disk_config/iso.toml:/config.toml:ro,Z" \
+            -v "$PWD/output/iso:/output:Z" \
+            -v "/var/lib/containers/storage:/var/lib/containers/storage" \
+            "$BIB_IMAGE" \
+            --type bootc-generic-iso \
+            --rootfs=btrfs \
+            --config /config.toml \
+            "$IMAGE"
+
+      - name: Upload ISO artifact
+        if: ${{ inputs.build_iso }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: LunnaOS-Polaris-${{ inputs.tag }}-ISO
+          path: output/iso/**/*
+          if-no-files-found: error
