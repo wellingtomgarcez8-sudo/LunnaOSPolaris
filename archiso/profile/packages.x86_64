@@ -4,7 +4,7 @@ linux-firmware
 mkinitcpio
 mkinitcpio-archiso
 systemd
-systemd-resolv
+systemd-resolvconf
 networkmanager
 iwd
 wireless-regdb
@@ -33,7 +33,7 @@ intel-media-driver
 libva-mesa-driver
 nvidia-open
 nvidia-utils
-nvidia-prime
+
 qt6-base
 qt6-declarative
 qt6-wayland
