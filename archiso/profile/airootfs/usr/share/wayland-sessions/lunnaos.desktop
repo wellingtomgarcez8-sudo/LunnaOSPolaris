@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=LunnaOS Selienne
+Comment=LunnaOS Shell session on Hyprland
+Exec=/usr/local/bin/lunna-session
+TryExec=/usr/local/bin/lunna-session
+Type=Application
+DesktopNames=LunnaOS;Hyprland
