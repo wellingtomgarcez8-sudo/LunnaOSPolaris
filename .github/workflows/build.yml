@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate source
-        run: ./build_files/validate.sh
+        run: bash ./build_files/validate.sh
 
       - name: Install Podman
         run: |
