@@ -34,20 +34,20 @@ A base não é um fork do código inteiro do Bazzite. O projeto usa uma camada f
 Requisitos: Podman, sudo e Python 3.11+.
 
 ```bash
-./build_files/validate.sh
+bash ./build_files/validate.sh
 podman build --pull=newer -t localhost/lunnaos-polaris:dev .
 ```
 
 Depois da imagem estar validada:
 
 ```bash
-./scripts/build-iso.sh localhost/lunnaos-polaris:dev
+bash ./scripts/build-iso.sh localhost/lunnaos-polaris:dev
 ```
 
 ou:
 
 ```bash
-./scripts/build-disk.sh localhost/lunnaos-polaris:dev qcow2
+bash ./scripts/build-disk.sh localhost/lunnaos-polaris:dev qcow2
 ```
 
 Os artefatos ficam em `output/`.
