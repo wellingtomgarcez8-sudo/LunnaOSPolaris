@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export XDG_CURRENT_DESKTOP=LunnaOS
+export XDG_SESSION_DESKTOP=LunnaOS
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export MOZ_ENABLE_WAYLAND=1
+export SDL_VIDEODRIVER=wayland
+mkdir -p "$HOME/.config/hypr"
+install -m 0644 /etc/lunnaos/lunna-compositor.conf "$HOME/.config/hypr/hyprland.conf"
+systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR DBUS_SESSION_BUS_ADDRESS
+systemctl --user daemon-reload
+systemctl --user enable --now lunna-shell.service
+exec /usr/bin/hyprland
