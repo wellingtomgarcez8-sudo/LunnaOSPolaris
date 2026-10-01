@@ -1,0 +1,36 @@
+name: LunnaOS Selienne — pure Arch ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [selienne-pure-arch]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
+
+      - name: Build ISO with native Archiso
+        run: bash ./scripts/build_pure_iso.sh
+
+      - name: Verify ISO artifact
+        run: |
+          set -e
+          test -n "$(find output/selienne -maxdepth 1 -type f -name '*.iso' -print -quit)"
+          ls -lh output/selienne/*.iso
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: LunnaOS-Selienne-1.0-ISO
+          path: output/selienne/*.iso
+          if-no-files-found: error
