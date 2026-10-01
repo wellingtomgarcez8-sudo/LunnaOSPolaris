@@ -1,0 +1,21 @@
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+accent-color='purple'
+clock-show-weekday=true
+show-battery-percentage=true
+font-name='Adwaita Sans 11'
+document-font-name='Adwaita Sans 11'
+monospace-font-name='Adwaita Mono 11'
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/lunnaos/polaris.svg'
+picture-uri-dark='file:///usr/share/backgrounds/lunnaos/polaris.svg'
+color-shading-type='solid'
+primary-color='#080612'
+secondary-color='#080612'
+
+[org/gnome/desktop/screensaver]
+picture-uri='file:///usr/share/backgrounds/lunnaos/polaris.svg'
+
+[org/gnome/shell]
+favorite-apps=['org.gnome.Nautilus.desktop','steam.desktop','net.lutris.Lutris.desktop','io.github.kolunmi.Bazaar.desktop','org.gnome.Ptyxis.desktop']
