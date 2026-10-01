@@ -4,16 +4,16 @@ IMAGE_NAME := "lunnaos-polaris"
 TAG := "dev"
 
 check:
-    @./build_files/validate.sh
+    @bash ./build_files/validate.sh
 
 build:
     podman build --pull=newer -t localhost/{{IMAGE_NAME}}:{{TAG}} .
 
 build-iso:
-    ./scripts/build-iso.sh localhost/{{IMAGE_NAME}}:{{TAG}}
+    bash ./scripts/build-iso.sh localhost/{{IMAGE_NAME}}:{{TAG}}
 
 build-qcow2:
-    ./scripts/build-disk.sh localhost/{{IMAGE_NAME}}:{{TAG}} qcow2
+    bash ./scripts/build-disk.sh localhost/{{IMAGE_NAME}}:{{TAG}} qcow2
 
 build-raw:
-    ./scripts/build-disk.sh localhost/{{IMAGE_NAME}}:{{TAG}} raw
+    bash ./scripts/build-disk.sh localhost/{{IMAGE_NAME}}:{{TAG}} raw
