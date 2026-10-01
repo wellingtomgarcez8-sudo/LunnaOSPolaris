@@ -1,0 +1,3 @@
+# Default bootc disk image configuration.
+# Keep user creation and secrets out of the image definition.
+[customizations]
