@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+import subprocess, sys
+from PyQt6.QtCore import Qt, QTimer, QDateTime
+from PyQt6.QtGui import QFont
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QPushButton
+
+QSS = """
+QWidget { color:#f7f3ff; font-family:'Noto Sans'; }
+#bar { background:rgba(10,7,20,225); border:1px solid rgba(138,43,226,150); border-radius:16px; }
+QPushButton { background:rgba(138,43,226,80); border:1px solid rgba(0,210,255,100); border-radius:12px; padding:7px 13px; }
+QPushButton:hover { background:rgba(138,43,226,145); }
+"""
+
+class Shell(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("LunnaOS Shell")
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setStyleSheet(QSS)
+        self.setGeometry(18,18,900,64)
+        bar=QWidget(self); bar.setObjectName("bar"); bar.setGeometry(0,0,900,64)
+        row=QHBoxLayout(bar); row.setContentsMargins(18,8,18,8)
+        title=QLabel("◈  LUNNAOS SELIENNE")
+        title.setFont(QFont("Noto Sans",13,QFont.Weight.Bold))
+        row.addWidget(title); row.addStretch()
+        for text,cmd in [("Launcher","lunna-launcher"),("Store","lunna-store"),("Monitor","lunna-monitor")]:
+            b=QPushButton(text); b.clicked.connect(lambda _,c=cmd: subprocess.Popen([c])); row.addWidget(b)
+        clock=QLabel(); row.addWidget(clock)
+        timer=QTimer(self)
+        timer.timeout.connect(lambda: clock.setText(QDateTime.currentDateTime().toString("HH:mm")))
+        timer.start(1000)
+        clock.setText(QDateTime.currentDateTime().toString("HH:mm"))
+
+app=QApplication(sys.argv)
+w=Shell(); w.show()
+sys.exit(app.exec())
