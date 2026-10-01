@@ -1,0 +1,11 @@
+NAME="LunnaOS Selienne"
+PRETTY_NAME="LunnaOS Selienne 1.0 (Polaris)"
+ID=lunnaos
+ID_LIKE=arch
+BUILD_ID=1.0
+VERSION="1.0"
+VERSION_ID=1.0
+ANSI_COLOR="38;5;135"
+HOME_URL="https://github.com/wellingtomgarcez8-sudo/LunnaOSPolaris"
+SUPPORT_URL="https://github.com/wellingtomgarcez8-sudo/LunnaOSPolaris/issues"
+BUG_REPORT_URL="https://github.com/wellingtomgarcez8-sudo/LunnaOSPolaris/issues"

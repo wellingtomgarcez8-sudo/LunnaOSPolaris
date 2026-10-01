@@ -1,0 +1,17 @@
+[Unit]
+Description=LunnaOS Shell
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/lunna-shell
+Restart=always
+RestartSec=1
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=true
+PrivateTmp=true
+OOMScoreAdjust=-500
+
+[Install]
+WantedBy=default.target

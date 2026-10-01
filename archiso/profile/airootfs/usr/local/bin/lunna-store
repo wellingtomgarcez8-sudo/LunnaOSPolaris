@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+import subprocess
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit, QMessageBox
+app=QApplication([]); w=QWidget(); w.setWindowTitle("LunnaOS Store"); w.resize(760,520)
+w.setStyleSheet("QWidget{background:#0a0714;color:#f7f3ff} QLineEdit,QPushButton{padding:10px;border-radius:10px;border:1px solid #8a2be2;background:#120d20;color:#fff}")
+lay=QVBoxLayout(w); lay.addWidget(QLabel("LunnaOS Store — Flatpak"))
+q=QLineEdit(); q.setPlaceholderText("ID do aplicativo Flatpak (ex.: org.mozilla.firefox)")
+b=QPushButton("Instalar")
+def install():
+    ident=q.text().strip()
+    if not ident: return
+    p=subprocess.run(["flatpak","install","--user","-y","flathub",ident],text=True,capture_output=True)
+    QMessageBox.information(w,"LunnaOS Store",p.stdout or p.stderr)
+b.clicked.connect(install); lay.addWidget(q); lay.addWidget(b); w.show(); app.exec()
