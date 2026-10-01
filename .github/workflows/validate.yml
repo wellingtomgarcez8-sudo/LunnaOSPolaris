@@ -16,4 +16,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate shell scripts and configuration
-        run: ./build_files/validate.sh
+        run: bash ./build_files/validate.sh
