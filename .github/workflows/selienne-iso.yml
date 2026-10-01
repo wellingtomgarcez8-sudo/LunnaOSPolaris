@@ -2,8 +2,6 @@ name: LunnaOS Selienne — pure Arch ISO
 
 on:
   workflow_dispatch:
-  push:
-    branches: [selienne-pure-arch]
 
 permissions:
   contents: read
