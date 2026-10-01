@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+import os, subprocess
+from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QLineEdit, QListWidget
+app=QApplication([])
+d=QDialog(); d.setWindowTitle("LunnaOS Launcher"); d.resize(620,480)
+d.setStyleSheet("QDialog{background:#0a0714;color:#f7f3ff} QLineEdit,QListWidget{background:#120d20;color:#fff;border:1px solid #8a2be2;border-radius:12px;padding:10px}")
+lay=QVBoxLayout(d); search=QLineEdit(); search.setPlaceholderText("Pesquisar aplicativos..."); listw=QListWidget()
+apps=[]
+for path in ["/usr/share/applications","/usr/local/share/applications"]:
+    try:
+        apps += [f for f in os.listdir(path) if f.endswith(".desktop")]
+    except FileNotFoundError: pass
+apps=sorted(set(apps)); listw.addItems(apps)
+search.textChanged.connect(lambda s: [listw.item(i).setHidden(s.lower() not in listw.item(i).text().lower()) for i in range(listw.count())])
+listw.itemDoubleClicked.connect(lambda item: subprocess.Popen(["gtk-launch",item.text()]))
+lay.addWidget(search); lay.addWidget(listw); d.show(); app.exec()
